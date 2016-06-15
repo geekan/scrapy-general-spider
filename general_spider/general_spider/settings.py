@@ -28,7 +28,7 @@ DOWNLOADER_MIDDLEWARES = {
 
 ITEM_PIPELINES = {
     'general_spider.pipelines.JsonWithEncodingPipeline': 300,
-    'general_spider.pipelines.TXTWithEncodingPipeline': 301,
+    #'general_spider.pipelines.TXTWithEncodingPipeline': 301,
     #'general_spider.pipelines.RedisPipeline': 301,
 }
 

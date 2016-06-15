@@ -21,7 +21,10 @@ class TXTWithEncodingPipeline(object):
         self.file = codecs.open('data_utf8.txt', 'w', encoding='utf-8')
 
     def process_item(self, item, spider):
-        line = '\t'.join([v for k, v in OrderedDict(item).items()]) + "\n"
+        # line = '\t'.join([v for k, v in OrderedDict(item).items()]) + "\n"
+        line = ''
+        for k, v in OrderedDict(item).items():
+            line = '\t'.join(v) + '\n'
         self.file.write(line)
         return item
 
