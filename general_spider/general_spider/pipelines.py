@@ -15,7 +15,7 @@ from collections import OrderedDict
 
 
 
-class TxtWithEncodingPipeline(object):
+class TXTWithEncodingPipeline(object):
 
     def __init__(self):
         self.file = codecs.open('data_utf8.txt', 'w', encoding='utf-8')
