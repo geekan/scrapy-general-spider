@@ -52,8 +52,7 @@ The Addams Family
 Adventures in Paradise
 Adventures in Wonderland
 The Adventures of Batman
-
-The Adventures of Brisco County, Jr.
+,The Adventures of Brisco County, Jr.
 The Adventures of Jimmy Neutron: Boy Genius
 The Adventures of Kit Carson
 The Adventures of Ozzie and Harriet
@@ -72,8 +71,7 @@ Alcatraz
 Alex Haley's Queen
 ALF
 Alfred Hitchcock Presents
-
-Alfred Hitchcock Presents
+,Alfred Hitchcock Presents
 Alias
 Alias Smith and Jones
 Alice
@@ -97,21 +95,18 @@ Almost Home
 The Torkelsons
 Alphas
 Alvin and the Chipmunks
-
-
+,
 The Alvin Show
 The Amanda Show
 Amanda's
-
-The Amazing Race
+,The Amazing Race
 The Amazing Spider-Man
 Amazing Stories
 Amen
 American Bandstand
 American Chopper
 American Chopper: Senior vs. Junior
-
-American Dad!
+,American Dad!
 American Dragon: Jake Long
 American Dreamer
 American Dreams
@@ -177,10 +172,8 @@ Arrested Development
 Arrow
 Arthur
 Arthur Godfrey and His Friends
-
-Arthur Godfrey's Talent Scouts
-
-As If
+,Arthur Godfrey's Talent Scouts
+,As If
 As If
 As the World Turns
 The Ashlee Simpson Show
@@ -226,8 +219,7 @@ Batman: The Animated Series
 Batman Beyond
 Batman: The Brave and the Bold
 The Batman/Superman Hour
-
-
+,
 Battery Park
 Battle Dome
 American Gladiators
@@ -447,10 +439,8 @@ Chicago Hope
 Chicago PD
 Chico and the Man
 China Beach
-
-
-
-
+,
+,
 CHiPs
 The Chris Isaak Show
 The Chris Rock Show
@@ -2113,8 +2103,7 @@ Talk Soup
 Taxi
 Team Umizoomi
 The Ted Knight Show
-
-The Ted Knight Show
+,The Ted Knight Show
 The Television Ghost
 Tenacious D
 Terminator: The Sarah Connor Chronicles
@@ -2152,8 +2141,7 @@ Too Close For Comfort
 Topper
 The Torkelsons
 Total Request Live
-
-Totally Spies!
+,Totally Spies!
 Touch
 A Touch of Grace
 Touched by an Angel
@@ -2285,8 +2273,7 @@ Zane Grey Theater
 Zeke and Luther
 Zoboomafoo
 Zoe, Duncan, Jack and Jane
-
-Zoey 101
+,Zoey 101
 Zoobilee Zoo
 ZOOM
 ZOOM
