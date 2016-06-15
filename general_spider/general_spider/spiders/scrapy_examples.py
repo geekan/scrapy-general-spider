@@ -18,3 +18,4 @@ class Config:
     start_urls=['https://github.com/geekan/scrapy-examples']
     ex_rules = [ex_rule]
 
+    follow = False

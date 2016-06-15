@@ -18,4 +18,5 @@ class Config:
     allowed_domains=['www.v2ex.com']
     start_urls=['http://www.v2ex.com/']
     ex_rules = [ex_rule]
+    follow = False
 

@@ -27,12 +27,14 @@ class general_spiderSpider(CommonSpider):
     name = 'general_spider'
 
     def __init__(self, conf_module='TestSpiderConfig', *args, **kwargs):
+        if conf_module.endswith(".py"):
+            conf_module = conf_module[:-3]
         cm  = __import__(conf_module, globals=globals())
         conf = cm.Config()
         self.name = conf.name
         self.allowed_domains = conf.allowed_domains
         self.start_urls = conf.start_urls
-        self.rules = [Rule(sle(allow=(c.allowed_rule_regex)), callback='parse_1', cb_kwargs=c.paras, follow=True) for c in conf.ex_rules]
+        self.rules = [Rule(sle(allow=(c.allowed_rule_regex)), callback='parse_1', cb_kwargs=c.paras, follow=conf.follow) for c in conf.ex_rules]
         info(self.start_urls)
         info(self.rules)
         super(general_spiderSpider, self).__init__(*args, **kwargs)
@@ -48,3 +50,4 @@ class general_spiderSpider(CommonSpider):
         # pp.pprint(x)
         # return self.parse_with_rules(response, self.css_rules, general_spiderItem)
         return x
+
