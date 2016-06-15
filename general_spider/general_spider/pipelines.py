@@ -25,7 +25,7 @@ class TXTWithEncodingPipeline(object):
         line = ''
         for k, v in OrderedDict(item).items():
             for d in v:
-                line = '\t'.join([v1 for k1, v1 in OrderedDict(d).items()]) + '\n'
+                line = '\t'.join([v1[0] for k1, v1 in OrderedDict(d).items()]) + '\n'
                 self.file.write(line)
         return item
 
