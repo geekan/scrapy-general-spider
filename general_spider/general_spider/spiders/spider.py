@@ -56,5 +56,7 @@ class general_spiderSpider(CommonSpider):
         return x
 
     def parse_start_url(self, response):
+        if type(self.list_css_rules) != dict:
+            return
         return self.parse_1(response, self.list_css_rules)
 
