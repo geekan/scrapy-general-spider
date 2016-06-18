@@ -17,6 +17,6 @@ class Config:
     name='pandatv'
     allowed_domains=['panda.tv']
     start_urls=['http://www.panda.tv/all']
-    ex_rules = [ex_rule]
+    ex_rules = []
     follow = False
 
