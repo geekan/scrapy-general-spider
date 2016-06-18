@@ -9,6 +9,7 @@ class Config:
             'author': '.video-nickname::text',
             'people_count': '.video-number::text',
             'tag': '.video-cate::text',
+            'url': 'a::attr(href)'
         }   
     }
 
