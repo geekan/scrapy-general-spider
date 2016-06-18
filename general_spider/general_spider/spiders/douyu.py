@@ -17,7 +17,7 @@ class Config:
 
     name='douyu.com'
     allowed_domains=['douyu.com']
-    start_urls=['http://www.douyu.com/all']
+    start_urls=['http://www.douyu.com/directory/all']
     ex_rules = []
     follow = False
 
