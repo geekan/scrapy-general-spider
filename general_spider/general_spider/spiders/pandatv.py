@@ -4,19 +4,19 @@ from BasicSpiderConfig import ExRule
 class Config:
 
     list_css_rules = { 
-        '.cell.item': {
-            'title': '.item_title a::text',
-            'node': '.node::text',
-            'author': '.node+ strong a::text',
-            'reply_count': '.count_livid::text'
+        '.video-list-item.video-no-tag': {
+            'room_name': '.video-title::text',
+            'author': '.video-nickname::text',
+            'people_count': '.video-number::text',
+            'tag': '.video-cate::text',
         }   
     }
 
-    ex_rule = ExRule('http://www.v2ex.com/$', list_css_rules=list_css_rules)
+    ex_rule = ExRule('http://www.panda.tv/all$', list_css_rules=list_css_rules)
 
-    name='v2ex'
-    allowed_domains=['www.v2ex.com']
-    start_urls=['http://www.v2ex.com/']
+    name='pandatv'
+    allowed_domains=['panda.tv']
+    start_urls=['http://www.panda.tv/all']
     ex_rules = [ex_rule]
     follow = False
 
