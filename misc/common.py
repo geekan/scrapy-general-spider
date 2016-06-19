@@ -1,7 +1,7 @@
 
 
 from collections import OrderedDict
-
+from misc.log import *
 
 # Make sure css rules have only one root.
 def extract_items_from_list(list_item):
@@ -20,16 +20,18 @@ def extract_items_from_list(list_item):
 
 
 # Make sure css rules have only one root.
-def extract_items_from_list_ex(list_item):
+def process_items_from_list(list_item, func):
     items = []
 
     for k, v in list_item.iteritems():
         for d in v:
             # print type(d), d
-            oi = d.iteritems()
+            # oi = d.items()
+            info(d)
+            func(d)
             # info(oi)
-            li = {k1: '|'.join(v1) for k1, v1 in oi}
+            # li = {k1: '|'.join(v1) for k1, v1 in oi}
             # line = '\t'.join(li[-1:]) + '\n'
-            item = li
-            items.append(item)
+            # item = li
+            # items.append(item)
     return items

@@ -37,23 +37,35 @@ class Config:
             warn('suspect numbers:'+str(numbers))
 
         number = float(numbers[0])
+
+        # FIXME magic logic. Consider to add log here.
         if hrn.endswith(u'万'):
             number = (number * 10000.0)
-        return int(number)
+        return str(int(number))
+
+    # Note that if not force 1 item, item['audience_count'] would contain a list.
+    @staticmethod
+    def update_audience_count(item):
+        if type(item['audience_count']) != list:
+            return
+
+        audience_count = [Config.deal_human_readable_numbers(i) for i in item['audience_count']]
+        item['audience_count'] = audience_count
 
     @staticmethod
     def preprocess_item(list_item):
         oi = OrderedDict(list_item)
-        items = extract_items_from_list_ex(oi)
 
-        for item in items:
-            audience_count = Config.deal_human_readable_numbers(item['audience_count'])
+        process_items_from_list(oi, Config.update_audience_count)
+
+        # for item in items:
+            # audience_count = Config.deal_human_readable_numbers(item['audience_count'])
             # print(item['url'], item['audience_count'], audience_count)
-            item['audience_count'] = audience_count
-            info(item)
+            # item['audience_count'] = audience_count
+            # info(item)
 
-        info('------------------')
-        info(items)
+        # info('------------------')
+        # info(items)
         info('------------------')
         info(oi)
 
