@@ -48,7 +48,8 @@ class Config:
 
         for item in items:
             audience_count = Config.deal_human_readable_numbers(item['audience_count'])
-            print(item['url'], item['audience_count'], audience_count)
+            # print(item['url'], item['audience_count'], audience_count)
+            item['audience_count'] = audience_count
 
         info('## preprocess_item')
         # info(len(oi))
