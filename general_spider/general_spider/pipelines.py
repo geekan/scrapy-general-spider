@@ -90,16 +90,20 @@ class MySQLStorePipeline(object):
 
     def process_item(self, item, spider):
         items = bigitem_to_items(item)
+
         try:
-            self.cursor.execute("""INSERT INTO live_rooms (author, tag, room_name, url, people_count)
-                            VALUES (%s, %s, %s, %s, %s)""",
-                           (
-                               item['author'].encode('utf-8'),
-                               item['tag'].encode('utf-8'),
-                               item['room_name'].encode('utf-8'),
-                               item['url'].encode('utf-8'),
-                               item['people_count'].encode('utf-8'),
-                            )
+            sql_values = ','.join([
+                                    '(' + ','.join([item[i] for i in ['author', 'tag', 'room_name', 'url', 'people_count']]) + ')'
+                                    for item in items
+                                ])
+
+            # (author, tag, room_name, url, people_count)
+            self.cursor.execute("""INSERT INTO live_rooms VALUES %s""", sql_values
+                               # item['author'].encode('utf-8'),
+                               # item['tag'].encode('utf-8'),
+                               # item['room_name'].encode('utf-8'),
+                               # item['url'].encode('utf-8'),
+                               # item['people_count'].encode('utf-8'),
             )
 
             self.conn.commit()
