@@ -14,6 +14,8 @@ import codecs
 from collections import OrderedDict
 import MySQLdb
 
+
+# Make sure css rules have only one root.
 def bigitem_to_items(item):
     items = []
     for k, v in OrderedDict(item).items():
