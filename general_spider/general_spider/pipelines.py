@@ -13,6 +13,7 @@ import json
 import codecs
 from collections import OrderedDict
 import MySQLdb
+from misc.log import *
 
 
 # Make sure css rules have only one root.
@@ -21,7 +22,9 @@ def bigitem_to_items(item):
     for k, v in OrderedDict(item).items():
         for d in v:
             # print type(d), d
-            li = ['|'.join(v1) for k1, v1 in OrderedDict(d).items()]
+            oi = OrderedDict(d).items()
+            info(oi)
+            li = {k1: '|'.join(v1) for k1, v1 in oi}
             # line = '\t'.join(li[-1:]) + '\n'
             item = li
             items.append(item)
@@ -35,9 +38,10 @@ class TXTWithEncodingPipeline(object):
 
     # process big item as default.
     def process_item(self, item, spider):
+        info('## txt pipeline 1')
         items = bigitem_to_items(item)
         for li in items:
-            line = '\t'.join(li) + '\n'
+            line = '\t'.join(li.values()) + '\n'
             self.file.write(line)
         return item
 
@@ -51,6 +55,7 @@ class JsonWithEncodingPipeline(object):
         self.file = codecs.open('data_utf8.json', 'w', encoding='utf-8')
 
     def process_item(self, item, spider):
+        info('## json pipeline 1')
         line = json.dumps(OrderedDict(item), ensure_ascii=False, sort_keys=False) + "\n"
         self.file.write(line)
         return item
@@ -65,6 +70,7 @@ class RedisPipeline(object):
         self.r = redis.StrictRedis(host='localhost', port=6379)
 
     def process_item(self, item, spider):
+        info('## redis pipeline 1')
         if not item['id']:
             print 'no id item!!'
 
@@ -82,29 +88,38 @@ class RedisPipeline(object):
         return
 
 
-class MySQLStorePipeline(object):
-  def __init__(self):
-    # self.conn = MySQLdb.connect(user='user', 'passwd', 'dbname', 'host', charset="utf8", use_unicode=True)
-    self.conn = MySQLdb.connect(user='root', passwd='', db='live_portal', host='localhost', charset="utf8", use_unicode=True)
-    self.cursor = self.conn.cursor()
+class MySQLWithEncodingPipeline(object):
+
+    def __init__(self):
+        # self.conn = MySQLdb.connect(user='user', 'passwd', 'dbname', 'host', charset="utf8", use_unicode=True)
+        self.conn = MySQLdb.connect(user='root', passwd='', db='live_portal', host='localhost', charset="utf8", use_unicode=True)
+        self.cursor = self.conn.cursor()
 
     def process_item(self, item, spider):
+        info('## mysql pipeline 1')
         items = bigitem_to_items(item)
 
         try:
+            cols_to_update = ['tag', 'room_name', 'url', 'people_count']
+            cols = ['author'] + cols_to_update
             sql_values = ','.join([
-                                    '(' + ','.join([item[i] for i in ['author', 'tag', 'room_name', 'url', 'people_count']]) + ')'
+                                    '(' + ','.join(['\''+item[i]+'\'' for i in cols]) + ')'
                                     for item in items
                                 ])
 
+            sql_update = ','.join([col + '=VALUES(' + col + ')' for col in cols_to_update])
+            sql = """INSERT INTO live_rooms VALUES %s""" % sql_values + \
+                  ''' ON DUPLICATE KEY UPDATE %s''' % sql_update
+            info('## mysql pipeline 2')
+            info(sql)
+
             # (author, tag, room_name, url, people_count)
-            self.cursor.execute("""INSERT INTO live_rooms VALUES %s""", sql_values
-                               # item['author'].encode('utf-8'),
-                               # item['tag'].encode('utf-8'),
-                               # item['room_name'].encode('utf-8'),
-                               # item['url'].encode('utf-8'),
-                               # item['people_count'].encode('utf-8'),
-            )
+            self.cursor.execute(sql)
+            # item['author'].encode('utf-8'),
+            # item['tag'].encode('utf-8'),
+            # item['room_name'].encode('utf-8'),
+            # item['url'].encode('utf-8'),
+            # item['people_count'].encode('utf-8'),
 
             self.conn.commit()
 
@@ -114,4 +129,7 @@ class MySQLStorePipeline(object):
 
 
         return item
+
+    def close_spider(self, spider):
+        return
 

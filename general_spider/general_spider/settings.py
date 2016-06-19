@@ -9,9 +9,14 @@
 import sys
 import os
 from os.path import dirname
+
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 path = dirname(dirname(os.path.abspath(os.path.dirname(__file__))))
 sys.path.append(path)
 from misc.log import *
+
 
 BOT_NAME = 'general_spider'
 
@@ -27,8 +32,9 @@ DOWNLOADER_MIDDLEWARES = {
 }
 
 ITEM_PIPELINES = {
+    'general_spider.pipelines.MySQLWithEncodingPipeline': 299,
     'general_spider.pipelines.JsonWithEncodingPipeline': 300,
-    'general_spider.pipelines.TXTWithEncodingPipeline': 301,
+    #'general_spider.pipelines.TXTWithEncodingPipeline': 301,
     #'general_spider.pipelines.RedisPipeline': 301,
 }
 
