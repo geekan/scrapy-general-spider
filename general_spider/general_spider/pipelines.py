@@ -26,7 +26,7 @@ class TXTWithEncodingPipeline(object):
     def process_item(self, item, spider):
         info('## txt pipeline 1')
         oi = OrderedDict(item)
-        items = bigitem_to_items(oi)
+        items = extract_items_from_list(oi)
         for li in items:
             line = '\t'.join(li.values()) + '\n'
             self.file.write(line)
@@ -86,7 +86,7 @@ class MySQLWithEncodingPipeline(object):
         info('## mysql pipeline 1')
 
         oi = OrderedDict(item)
-        items = bigitem_to_items(oi)
+        items = extract_items_from_list(oi)
 
         try:
             cols_to_update = ['tag', 'room_name', 'url', 'audience_count', 'platform', 'platform_prefix_url']

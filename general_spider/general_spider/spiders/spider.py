@@ -37,6 +37,8 @@ class general_spiderSpider(CommonSpider):
         self.start_urls = conf.start_urls
         self.list_css_rules = conf.list_css_rules
         self.rules = [Rule(sle(allow=(c.allowed_rule_regex)), callback='parse_1', cb_kwargs=c.paras, follow=conf.follow) for c in conf.ex_rules]
+        self.conf = conf
+
         info(self.start_urls)
         info(self.rules)
         info([[c.allowed_rule_regex, c.paras] for c in conf.ex_rules])
@@ -49,6 +51,13 @@ class general_spiderSpider(CommonSpider):
         info('list_css_rules:')
         info(list_css_rules)
         x = self.parse_with_rules(response, list_css_rules, dict)
+
+        # info(x)
+        preprocess_item = getattr(self.conf, "preprocess_item", None)
+        if callable(preprocess_item):
+            for item in x:
+                preprocess_item(item)
+
         # x = self.parse_with_rules(response, self.content_css_rules, dict)
         # print(json.dumps(x, ensure_ascii=False, indent=2))
         # pp.pprint(x)

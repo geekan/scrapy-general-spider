@@ -3,7 +3,7 @@
 from collections import OrderedDict
 
 # Make sure css rules have only one root.
-def bigitem_to_items(item):
+def extract_items_from_list(item):
     items = []
 
     for k, v in OrderedDict(item).items():
