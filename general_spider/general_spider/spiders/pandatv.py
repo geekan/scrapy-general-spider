@@ -9,7 +9,9 @@ class Config:
             'anchor': '.video-nickname::text',
             'audience_count': '.video-number::text',
             'tag': '.video-cate::text',
-            'url': 'a::attr(href)'
+            'url': 'a::attr(href)',
+            'platform': ['pandatv'],
+            'platform_prefix_url': ['http://www.panda.tv/'],
         }   
     }
 

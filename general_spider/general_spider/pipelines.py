@@ -100,15 +100,15 @@ class MySQLWithEncodingPipeline(object):
         items = bigitem_to_items(item)
 
         try:
-            cols_to_update = ['tag', 'room_name', 'url', 'people_count']
-            cols = ['author'] + cols_to_update
+            cols_to_update = ['tag', 'room_name', 'url', 'audience_count', 'platform', 'platform_prefix_url']
+            cols = ['anchor'] + cols_to_update
             sql_values = ','.join([
                                     '(' + ','.join(['\''+item[i]+'\'' for i in cols]) + ')'
                                     for item in items
                                 ])
 
             sql_update = ','.join([col + '=VALUES(' + col + ')' for col in cols_to_update])
-            sql = """INSERT INTO live_rooms VALUES %s""" % sql_values + \
+            sql = """INSERT INTO live_rooms (%s) VALUES %s""" % (','.join(cols), sql_values) + \
                   ''' ON DUPLICATE KEY UPDATE %s''' % sql_update
             info('## mysql pipeline 2')
             info(sql)

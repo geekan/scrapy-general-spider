@@ -128,6 +128,8 @@ class CommonSpider(CrawlSpider):
                 if k in self.keywords:
                     continue
                 if type(v) == list:
+                    # XXX: magic..
+                    item[k] = v
                     continue
                 self.deal_text(sel, item, force_1_item, k, v)
                 #import pdb;pdb.set_trace()
