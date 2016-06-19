@@ -37,7 +37,7 @@ class TXTWithEncodingPipeline(object):
     def process_item(self, item, spider):
         items = bigitem_to_items(item)
         for li in items:
-            line = '\t'.join(li[-1:]) + '\n'
+            line = '\t'.join(li) + '\n'
             self.file.write(line)
         return item
 
