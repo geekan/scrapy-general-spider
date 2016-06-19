@@ -28,7 +28,8 @@ class TXTWithEncodingPipeline(object):
             for d in v:
                 # print type(d), d
                 li = ['|'.join(v1) for k1, v1 in OrderedDict(d).items()]
-                line = '\t'.join(li[-1:]) + '\n'
+                # line = '\t'.join(li[-1:]) + '\n'
+                line = '\t'.join(li) + '\n'
                 self.file.write(line)
         return item
 
@@ -67,6 +68,7 @@ class RedisPipeline(object):
             ritem = eval(self.r.get(item['id']))
             final_item = dict(item.items() + ritem.items())
         self.r.set(item['id'], final_item)
+        return item
 
     def close_spider(self, spider):
         return
@@ -79,8 +81,14 @@ class MySQLStorePipeline(object):
     self.cursor = self.conn.cursor()
 
     def process_item(self, item, spider):
+        for k, v in OrderedDict(item).items():
+            for d in v:
+                # print type(d), d
+                li = ['|'.join(v1) for k1, v1 in OrderedDict(d).items()]
+                line = '\t'.join(li[-1:]) + '\n'
+                self.file.write(line)
         try:
-            self.cursor.execute("""INSERT INTO example_book_store (book_name, price)
+            self.cursor.execute("""INSERT INTO live_portal (book_name, price)
                             VALUES (%s, %s)""", 
                            (item['book_name'].encode('utf-8'), 
                             item['price'].encode('utf-8')))
