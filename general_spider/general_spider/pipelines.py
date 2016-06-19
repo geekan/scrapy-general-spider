@@ -12,7 +12,7 @@ from scrapy import signals
 import json
 import codecs
 from collections import OrderedDict
-
+import MySQLdb
 
 
 class TXTWithEncodingPipeline(object):
@@ -20,6 +20,7 @@ class TXTWithEncodingPipeline(object):
     def __init__(self):
         self.file = codecs.open('data_utf8.txt', 'w', encoding='utf-8')
 
+    # process big item as default.
     def process_item(self, item, spider):
         # line = '\t'.join([v for k, v in OrderedDict(item).items()]) + "\n"
         line = ''
@@ -70,21 +71,16 @@ class RedisPipeline(object):
     def close_spider(self, spider):
         return
 
-import sys
-import MySQLdb
-import hashlib
-from scrapy.exceptions import DropItem
-from scrapy.http import Request
 
 class MySQLStorePipeline(object):
   def __init__(self):
     # self.conn = MySQLdb.connect(user='user', 'passwd', 'dbname', 'host', charset="utf8", use_unicode=True)
-    self.conn = MySQLdb.connect(user='dbuser', passwd='dbpasswd', db='dbname', host='dbhost', charset="utf8", use_unicode=True)
+    self.conn = MySQLdb.connect(user='root', passwd='', db='live_portal', host='localhost', charset="utf8", use_unicode=True)
     self.cursor = self.conn.cursor()
 
-    def process_item(self, item, spider):    
+    def process_item(self, item, spider):
         try:
-            self.cursor.execute("""INSERT INTO example_book_store (book_name, price)  
+            self.cursor.execute("""INSERT INTO example_book_store (book_name, price)
                             VALUES (%s, %s)""", 
                            (item['book_name'].encode('utf-8'), 
                             item['price'].encode('utf-8')))
@@ -97,3 +93,4 @@ class MySQLStorePipeline(object):
 
 
         return item
+
