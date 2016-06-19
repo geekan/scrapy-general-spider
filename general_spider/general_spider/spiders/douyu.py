@@ -1,5 +1,8 @@
 
 from BasicSpiderConfig import ExRule
+from collections import OrderedDict
+from misc.common import *
+from misc.log import *
 
 class Config:
 
@@ -23,3 +26,9 @@ class Config:
     ex_rules = []
     follow = False
 
+    def preprocess_item(self, item):
+        oi = OrderedDict(item)
+        items = bigitem_to_items(oi)
+        info('## preprocess_item')
+        info(len(oi))
+        return oi
