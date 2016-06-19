@@ -21,14 +21,14 @@ class Config:
 
     # print('(' + '|'.join([post + '(\?p=[1-9]|.*)?$' for post in posts]) + ')')
     # ex_rule = ExRule('(' + '|'.join([post for post in posts]) + ')', list_css_rules=list_css_rules)
-    # ex_rules = [
-    #     ExRule(post, list_css_rules=list_css_rules)
-    #     for post in posts
-    # ]
+    ex_rules = [
+        ExRule(post + '\?p=[2-9]', list_css_rules=list_css_rules)
+        for post in posts
+    ]
     # ex_rule = ExRule('http://www.v2ex.com/t/204079.*?$', list_css_rules=list_css_rules)
     # ex_rules = [ex_rule]
     # print(ex_rules)
-    ex_rules = []
+    # ex_rules = []
 
     name='v2ex'
     allowed_domains = ['www.v2ex.com']
