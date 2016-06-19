@@ -14,6 +14,17 @@ import codecs
 from collections import OrderedDict
 import MySQLdb
 
+def bigitem_to_items(item):
+    items = []
+    for k, v in OrderedDict(item).items():
+        for d in v:
+            # print type(d), d
+            li = ['|'.join(v1) for k1, v1 in OrderedDict(d).items()]
+            # line = '\t'.join(li[-1:]) + '\n'
+            item = li
+            items.append(item)
+    return items
+
 
 class TXTWithEncodingPipeline(object):
 
@@ -22,15 +33,10 @@ class TXTWithEncodingPipeline(object):
 
     # process big item as default.
     def process_item(self, item, spider):
-        # line = '\t'.join([v for k, v in OrderedDict(item).items()]) + "\n"
-        line = ''
-        for k, v in OrderedDict(item).items():
-            for d in v:
-                # print type(d), d
-                li = ['|'.join(v1) for k1, v1 in OrderedDict(d).items()]
-                # line = '\t'.join(li[-1:]) + '\n'
-                line = '\t'.join(li) + '\n'
-                self.file.write(line)
+        items = bigitem_to_items(item)
+        for li in items:
+            line = '\t'.join(li[-1:]) + '\n'
+            self.file.write(line)
         return item
 
     def close_spider(self, spider):
@@ -88,7 +94,7 @@ class MySQLStorePipeline(object):
                 line = '\t'.join(li[-1:]) + '\n'
                 self.file.write(line)
         try:
-            self.cursor.execute("""INSERT INTO live_portal (book_name, price)
+            self.cursor.execute("""INSERT INTO live_rooms (author, tag, room_name, url, people_count)
                             VALUES (%s, %s)""", 
                            (item['book_name'].encode('utf-8'), 
                             item['price'].encode('utf-8')))
