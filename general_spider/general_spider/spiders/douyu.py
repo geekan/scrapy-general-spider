@@ -38,18 +38,24 @@ class Config:
 
         number = float(numbers[0])
         if hrn.endswith(u'万'):
-            number = int(number * 10000.0)
-        return number
+            number = (number * 10000.0)
+        return int(number)
 
     @staticmethod
     def preprocess_item(list_item):
         oi = OrderedDict(list_item)
-        items = extract_items_from_list(oi)
+        items = extract_items_from_list_ex(oi)
 
         for item in items:
             audience_count = Config.deal_human_readable_numbers(item['audience_count'])
             # print(item['url'], item['audience_count'], audience_count)
             item['audience_count'] = audience_count
+            info(item)
+
+        info('------------------')
+        info(items)
+        info('------------------')
+        info(oi)
 
         info('## preprocess_item')
         # info(len(oi))
