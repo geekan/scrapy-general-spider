@@ -6,8 +6,8 @@ class Config:
     list_css_rules = { 
         '.video-list-item.video-no-tag': {
             'room_name': '.video-title::text',
-            'author': '.video-nickname::text',
-            'people_count': '.video-number::text',
+            'anchor': '.video-nickname::text',
+            'audience_count': '.video-number::text',
             'tag': '.video-cate::text',
             'url': 'a::attr(href)'
         }   

@@ -8,8 +8,8 @@ class Config:
             'url': 'a::attr(href)',
             'room_name': 'a::attr(title)',
             'tag': 'span.tag.ellipsis::text',
-            'people_count': '.dy-num.fr::text',
-            'author': '.dy-name::text'
+            'audience_count': '.dy-num.fr::text',
+            'anchor': '.dy-name::text'
         }
     }
 
