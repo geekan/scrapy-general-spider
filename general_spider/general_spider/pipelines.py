@@ -89,17 +89,18 @@ class MySQLStorePipeline(object):
     self.cursor = self.conn.cursor()
 
     def process_item(self, item, spider):
-        for k, v in OrderedDict(item).items():
-            for d in v:
-                # print type(d), d
-                li = ['|'.join(v1) for k1, v1 in OrderedDict(d).items()]
-                line = '\t'.join(li[-1:]) + '\n'
-                self.file.write(line)
+        items = bigitem_to_items(item)
         try:
             self.cursor.execute("""INSERT INTO live_rooms (author, tag, room_name, url, people_count)
-                            VALUES (%s, %s)""", 
-                           (item['book_name'].encode('utf-8'), 
-                            item['price'].encode('utf-8')))
+                            VALUES (%s, %s, %s, %s, %s)""",
+                           (
+                               item['author'].encode('utf-8'),
+                               item['tag'].encode('utf-8'),
+                               item['room_name'].encode('utf-8'),
+                               item['url'].encode('utf-8'),
+                               item['people_count'].encode('utf-8'),
+                            )
+            )
 
             self.conn.commit()
 
