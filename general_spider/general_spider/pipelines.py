@@ -19,11 +19,12 @@ from misc.log import *
 # Make sure css rules have only one root.
 def bigitem_to_items(item):
     items = []
+
     for k, v in OrderedDict(item).items():
         for d in v:
             # print type(d), d
             oi = OrderedDict(d).items()
-            info(oi)
+            # info(oi)
             li = {k1: '|'.join(v1) for k1, v1 in oi}
             # line = '\t'.join(li[-1:]) + '\n'
             item = li
@@ -39,11 +40,12 @@ class TXTWithEncodingPipeline(object):
     # process big item as default.
     def process_item(self, item, spider):
         info('## txt pipeline 1')
-        items = bigitem_to_items(item)
+        oi = OrderedDict(item)
+        items = bigitem_to_items(oi)
         for li in items:
             line = '\t'.join(li.values()) + '\n'
             self.file.write(line)
-        return item
+        return oi
 
     def close_spider(self, spider):
         self.file.close()
@@ -97,7 +99,9 @@ class MySQLWithEncodingPipeline(object):
 
     def process_item(self, item, spider):
         info('## mysql pipeline 1')
-        items = bigitem_to_items(item)
+
+        oi = OrderedDict(item)
+        items = bigitem_to_items(oi)
 
         try:
             cols_to_update = ['tag', 'room_name', 'url', 'audience_count', 'platform', 'platform_prefix_url']
@@ -111,7 +115,7 @@ class MySQLWithEncodingPipeline(object):
             sql = """INSERT INTO live_rooms (%s) VALUES %s""" % (','.join(cols), sql_values) + \
                   ''' ON DUPLICATE KEY UPDATE %s''' % sql_update
             info('## mysql pipeline 2')
-            info(sql)
+            debug(sql)
 
             # (author, tag, room_name, url, people_count)
             self.cursor.execute(sql)
@@ -128,7 +132,7 @@ class MySQLWithEncodingPipeline(object):
             print "Error %d: %s" % (e.args[0], e.args[1])
 
 
-        return item
+        return oi
 
     def close_spider(self, spider):
         return
