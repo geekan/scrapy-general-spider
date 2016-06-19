@@ -9,7 +9,7 @@ class Config:
             'room_name': 'a::attr(title)',
             'tag': 'span.tag.ellipsis::text',
             'audience_count': '.dy-num.fr::text',
-            'anchor': '.dy-name::text'
+            'anchor': '.dy-name::text',
             'platform': ['douyu'],
             'platform_prefix_url': ['http://www.douyu.com/'],
         }
